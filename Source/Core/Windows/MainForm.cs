@@ -2666,7 +2666,10 @@ namespace CodeImp.DoomBuilder.Windows
             General.Settings.DockersWidth = dockerspanel.Width;
 
             if (!General.Settings.CollapseDockers)
+            {
                 dockersspace.Width = dockerspanel.Width;
+                dockerspanel.Left = dockersspace.Left;
+            }
         }
 
         #endregion
