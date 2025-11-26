@@ -76,12 +76,14 @@ namespace CodeImp.DoomBuilder.Windows
             }
         }
 
-        // villsa 9/12/11
+        // villsa 9/12/11 rewritten by immorpher 11/26/2025
         private void SwitchTextureMask(Linedef l)
         {
-            int switchflags = 0;
-            int mask = 0;
+            int switchflags = 0; // all of the switch tags
+            int storedmask = 0; // for where switch texture is stored
+			int displaymask = 0; // for where switch texture is displayed
 
+			// put all the switch flags together
             if ((l.SwitchMask & 0x2000) == 0x2000)
                 switchflags |= 0x2000;
 
@@ -91,88 +93,76 @@ namespace CodeImp.DoomBuilder.Windows
             if ((l.SwitchMask & 0x8000) == 0x8000)
                 switchflags |= 0x8000;
 
-            if (l.IsFlagSet("65536"))
-                switchflags |= 65536;
+            if ((l.SwitchMask & 0x10000) == 0x10000)
+                switchflags |= 0x10000;
 
-            mask = (switchflags & 0x6000);
+			// grab flags only for stored and displayed
+            storedmask = (switchflags & 0x6000);
+			displaymask = (switchflags & 0x18000);
 
-            if (mask == 0)
-                return;
-
-            if (mask == 0x2000)
+			// set the switch stored location in checkboxes
+            if (storedmask == 0x2000)
             {
                 chkSwitchTextureUpper.Checked = true;
-
-                if ((switchflags & 0x8000) == 0x8000)
-                    chkSwitchDisplayMiddle.Checked = true;
-                else
-                    chkSwitchDisplayLower.Checked = true;
             }
-            else if (mask == 0x4000)
+            else if (storedmask == 0x4000)
             {
                 chkSwitchTextureLower.Checked = true;
-
-                // styd: Fixes a bug where, after checking the Middle and Lower boxes, and clicked OK, and returning to the Edit linedef menu, the Middle box is no longer checked, Only the Lower box is checked.
-                if ((switchflags & 0x8000) == 0x8000)
-                    chkSwitchDisplayUpper.Checked = true;
-                else
-                    chkSwitchDisplayMiddle.Checked = true;
             }
-            else if (mask == 0x6000)
+            else if (storedmask == 0x6000)
             {
                 chkSwitchTextureMiddle.Checked = true;
-
-                if ((switchflags & 0x8000) == 0x8000)
-                    chkSwitchDisplayUpper.Checked = true;
-                else
-                    chkSwitchDisplayLower.Checked = true;
+            }
+			
+			// set switch display location in checkboxes
+			if (displaymask == 0x8000)
+            {
+                chkSwitchDisplayUpper.Checked = true;
+            }
+            else if (displaymask == 0x10000)
+            {
+                chkSwitchDisplayLower.Checked = true;
+            }
+            else if (displaymask == 0x18000)
+            {
+                chkSwitchDisplayMiddle.Checked = true;
             }
         }
 
-        // villsa 9/12/11
+        // villsa 9/12/11 rewritten by immorpher 11/26/2025
         private void SetSwitchMask(Linedef l)
         {
             int switchflags = 0;
 
-            // just check for one of the checkboxes.. no need to
-            // check for all of them..
-            if (chkSwitchTextureLower.Enabled == false)
-                return;
-
+			// set the switch stored location flags
             if (chkSwitchTextureLower.Checked == true)
             {
-                if (chkSwitchDisplayMiddle.Checked == true)
-                {
-                    switchflags = 0x4000;
-                }
-                else if (chkSwitchDisplayUpper.Checked == true)
-                {
-                    switchflags = (0x4000 | 0x8000);
-                }
+				switchflags |= 0x4000;
             }
             else if (chkSwitchTextureMiddle.Checked == true)
             {
-                if (chkSwitchDisplayLower.Checked == true)
-                {
-                    switchflags = (0x2000 | 0x4000);
-                }
-                else if (chkSwitchDisplayUpper.Checked == true)
-                {
-                    switchflags = (0x2000 | 0x4000 | 0x8000);
-                }
+				switchflags |= 0x6000;
             }
             else if (chkSwitchTextureUpper.Checked == true)
             {
-                if (chkSwitchDisplayMiddle.Checked == true)
-                {
-                    switchflags = (0x2000 | 0x8000);
-                }
-                else if (chkSwitchDisplayLower.Checked == true)
-                {
-                    switchflags = 0x2000;
-                }
+				switchflags |= 0x2000;
             }
 
+			// set the switch display location flags
+            if (chkSwitchDisplayLower.Checked == true)
+            {
+				switchflags |= 0x10000;
+            }
+            else if (chkSwitchDisplayMiddle.Checked == true)
+            {
+				switchflags |= 0x18000;
+            }
+            else if (chkSwitchDisplayUpper.Checked == true)
+            {
+				switchflags |= 0x8000;
+            }
+			
+			// store all of the switch flags
             l.SwitchMask = switchflags;
         }
 

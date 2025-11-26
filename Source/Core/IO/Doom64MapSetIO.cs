@@ -479,9 +479,12 @@ namespace CodeImp.DoomBuilder.IO
 
                 if ((flags & 0x4000) == 0x4000)
                     switchmask |= 0x4000;
-
+				
                 if ((flags & 0x8000) == 0x8000)
                     switchmask |= 0x8000;
+				
+                if ((flags & 0x10000) == 0x10000)
+                    switchmask |= 0x10000;
 
                 // Make string flags
                 stringflags = new Dictionary<string, bool>();
