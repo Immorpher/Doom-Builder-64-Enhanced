@@ -83,7 +83,7 @@ namespace CodeImp.DoomBuilder.Windows
             int storedmask = 0; // for where switch texture is stored
 			int displaymask = 0; // for where switch texture is displayed
 
-			// put all the switch flags together
+            // put all the switch flags together
             if ((l.SwitchMask & 0x2000) == 0x2000)
                 switchflags |= 0x2000;
 
@@ -96,11 +96,11 @@ namespace CodeImp.DoomBuilder.Windows
             if ((l.SwitchMask & 0x10000) == 0x10000)
                 switchflags |= 0x10000;
 
-			// grab flags only for stored and displayed
+            // grab flags only for stored and displayed
             storedmask = (switchflags & 0x6000);
 			displaymask = (switchflags & 0x18000);
 
-			// set the switch stored location in checkboxes
+            // set the switch stored location in checkboxes
             if (storedmask == 0x2000)
             {
                 chkSwitchTextureUpper.Checked = true;
@@ -134,7 +134,13 @@ namespace CodeImp.DoomBuilder.Windows
         {
             int switchflags = 0;
 
-			// set the switch stored location flags
+            // styd: Fixes the bug that occurs when selecting multiple Lindefs at once, and that you click OK, It applies all the switchs flags to all the lindefs you have selected.
+            if (lines.Count > 1)
+            {
+                return;
+            }
+
+            // set the switch stored location flags
             if (chkSwitchTextureLower.Checked == true)
             {
 				switchflags |= 0x4000;
