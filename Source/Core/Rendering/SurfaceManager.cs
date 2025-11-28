@@ -663,7 +663,6 @@ namespace CodeImp.DoomBuilder.Rendering
         // This renders the sorted sector surfaces
         internal void RenderSectorSurfaces(D3DDevice graphics)
         {
-            int counter = 0;
             if (!resourcesunloaded)
             {
                 graphics.Shaders.Display2D.Begin();
@@ -688,7 +687,6 @@ namespace CodeImp.DoomBuilder.Rendering
                         }
 
                         // Draw
-                        counter++;
                         graphics.Device.DrawPrimitives(PrimitiveType.TriangleList, entry.vertexoffset + (entry.numvertices * surfacevertexoffsetmul), entry.numvertices / 3);
                     }
 
@@ -696,7 +694,6 @@ namespace CodeImp.DoomBuilder.Rendering
                 }
                 graphics.Shaders.Display2D.End();
             }
-            Console.WriteLine("Calls: " + counter);
         }
 
         #endregion
