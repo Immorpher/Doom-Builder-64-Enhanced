@@ -141,6 +141,7 @@
 #define Teleport_Normal(tid)                            39:tid
 #define Teleport_Stomp(tid)                             249:tid
 #define Teleport_Silent(tid)                            249:tid
+#define Teleport_Monsters_Only(tid)                            125:tid
 
 //
 // ACTORS
@@ -216,3 +217,4 @@
 #define Orange_Artifact_Switch(tag)                                  90:tag
 #define Blue_Artifact_Switch(tag)                                  91:tag
 #define Purple_Artifact_Switch(tag)                                  92:tag
+#define Start_Light_Strobing(tag)                                  17:tag
