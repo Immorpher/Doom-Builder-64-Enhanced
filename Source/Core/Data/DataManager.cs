@@ -717,7 +717,7 @@ namespace CodeImp.DoomBuilder.Data
             }
 
             // Make empty palette when still no palette found
-            if (palette == null)
+            if (palette == null && !General.Map.FormatInterface.InDoom64Mode) // Global palette not required for Doom 64
             {
                 General.ErrorLogger.Add(ErrorType.Warning, "None of the loaded resources define a color palette. Did you forget to configure an IWAD for this game configuration?");
                 palette = new Playpal();
