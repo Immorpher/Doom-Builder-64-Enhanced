@@ -77,99 +77,69 @@ namespace CodeImp.DoomBuilder.Windows
         }
 
         // villsa 9/12/11 rewritten by immorpher 11/26/2025
-        private void SwitchTextureMask(Linedef l)
-        {
-            int switchflags = 0; // all of the switch tags
-            int storedmask = 0; // for where switch texture is stored
-			int displaymask = 0; // for where switch texture is displayed
-
-            // put all the switch flags together
-            if ((l.SwitchMask & 0x2000) == 0x2000)
-                switchflags |= 0x2000;
-
-            if ((l.SwitchMask & 0x4000) == 0x4000)
-                switchflags |= 0x4000;
-
-            if ((l.SwitchMask & 0x8000) == 0x8000)
-                switchflags |= 0x8000;
-
-            if ((l.SwitchMask & 0x10000) == 0x10000)
-                switchflags |= 0x10000;
-
-            // grab flags only for stored and displayed
-            storedmask = (switchflags & 0x6000);
-			displaymask = (switchflags & 0x18000);
-
-            // set the switch stored location in checkboxes
-            if (storedmask == 0x2000)
-            {
-                chkSwitchTextureUpper.Checked = true;
-            }
-            else if (storedmask == 0x4000)
-            {
-                chkSwitchTextureLower.Checked = true;
-            }
-            else if (storedmask == 0x6000)
-            {
-                chkSwitchTextureMiddle.Checked = true;
-            }
-			
-			// set switch display location in checkboxes
-			if (displaymask == 0x8000)
-            {
-                chkSwitchDisplayUpper.Checked = true;
-            }
-            else if (displaymask == 0x10000)
-            {
-                chkSwitchDisplayLower.Checked = true;
-            }
-            else if (displaymask == 0x18000)
-            {
-                chkSwitchDisplayMiddle.Checked = true;
-            }
-        }
-
-        // villsa 9/12/11 rewritten by immorpher 11/26/2025
         private void SetSwitchMask(Linedef l)
         {
-            int switchflags = 0;
-
-            // styd: Fixes the bug that occurs when selecting multiple Lindefs at once, and that you click OK, It applies all the switchs flags to all the lindefs you have selected.
-            if (lines.Count > 1)
+		
+		    // Set all of the unchecked switch location flags
+			if (chkSwitchTextureMiddle.CheckState == CheckState.Unchecked && (l.SwitchMask & 0x6000) == 0x6000)
             {
-                return;
-            }
-
-            // set the switch stored location flags
-            if (chkSwitchTextureLower.Checked == true)
-            {
-				switchflags |= 0x4000;
-            }
-            else if (chkSwitchTextureMiddle.Checked == true)
-            {
-				switchflags |= 0x6000;
-            }
-            else if (chkSwitchTextureUpper.Checked == true)
-            {
-				switchflags |= 0x2000;
-            }
-
-			// set the switch display location flags
-            if (chkSwitchDisplayLower.Checked == true)
-            {
-				switchflags |= 0x10000;
-            }
-            else if (chkSwitchDisplayMiddle.Checked == true)
-            {
-				switchflags |= 0x18000;
-            }
-            else if (chkSwitchDisplayUpper.Checked == true)
-            {
-				switchflags |= 0x8000;
+				l.SwitchMask &= ~0x6000;
             }
 			
-			// store all of the switch flags
-            l.SwitchMask = switchflags;
+			if (chkSwitchTextureLower.CheckState == CheckState.Unchecked && (l.SwitchMask & 0x6000) != 0x6000)
+            {
+				l.SwitchMask &= ~0x4000;
+            }
+			
+			if (chkSwitchTextureUpper.CheckState == CheckState.Unchecked && (l.SwitchMask & 0x6000) != 0x6000)
+            {
+				l.SwitchMask &= ~0x2000;
+            }
+			
+			// Set all of the checked switch display flags
+			if (chkSwitchDisplayMiddle.CheckState == CheckState.Unchecked && (l.SwitchMask & 0x18000) == 0x18000)
+            {
+				l.SwitchMask &= ~0x18000;
+            }
+			
+			if (chkSwitchDisplayLower.CheckState == CheckState.Unchecked && (l.SwitchMask & 0x18000) != 0x18000)
+            {
+				l.SwitchMask &= ~0x10000;
+            }
+			
+			if (chkSwitchDisplayUpper.CheckState == CheckState.Unchecked && (l.SwitchMask & 0x18000) != 0x18000)
+            {
+				l.SwitchMask &= ~0x8000;
+            }
+			
+            // Set all of the checked switch location flags
+            if (chkSwitchTextureLower.CheckState == CheckState.Checked)
+            {
+				l.SwitchMask |= 0x4000;
+            }
+            else if (chkSwitchTextureMiddle.CheckState == CheckState.Checked)
+            {
+				l.SwitchMask |= 0x6000;
+            }
+            else if (chkSwitchTextureUpper.CheckState == CheckState.Checked)
+            {
+				l.SwitchMask |= 0x2000;
+            }
+
+			// Set all of the checked switch display flags
+            if (chkSwitchDisplayLower.CheckState == CheckState.Checked)
+            {
+				l.SwitchMask |= 0x10000;
+            }
+            else if (chkSwitchDisplayMiddle.CheckState == CheckState.Checked)
+            {
+				l.SwitchMask |= 0x18000;
+            }
+            else if (chkSwitchDisplayUpper.CheckState == CheckState.Checked)
+            {
+				l.SwitchMask |= 0x8000;
+            }
+			
         }
 
         private void PreSetActivationFlag(CheckBox c, int flag, int mask)
@@ -177,6 +147,38 @@ namespace CodeImp.DoomBuilder.Windows
             if ((flag & mask) == mask)
                 c.Checked = true;
         }
+		
+		// Preset the switch flags
+		private void PreSetSwitchFlags(int flag)
+		{
+			// set the switch stored location flags
+			if ((flag & 0x6000) == 0x6000) // check middle first
+			{
+				chkSwitchTextureMiddle.Checked = true;
+			}
+			else if ((flag & 0x4000) == 0x4000)
+			{
+				chkSwitchTextureLower.Checked = true;
+			}
+			else if ((flag & 0x2000) == 0x2000)
+			{
+				chkSwitchTextureUpper.Checked = true;
+			}
+
+			// set the switch display location flags
+			if ((flag & 0x18000) == 0x18000) // check middle first
+			{
+				chkSwitchDisplayMiddle.Checked = true;
+			}
+			else if ((flag & 0x10000) == 0x10000)
+			{
+				chkSwitchDisplayLower.Checked = true;
+			}
+			else if ((flag & 0x8000) == 0x8000)
+			{
+				chkSwitchDisplayUpper.Checked = true;
+			}
+		}
 
         private void CheckActivationState(CheckBox c, int flag, int mask)
         {
@@ -194,6 +196,14 @@ namespace CodeImp.DoomBuilder.Windows
             else if (c.CheckState == CheckState.Unchecked)
                 l.Activate &= ~mask;
         }
+		
+		private void SetSwitchFlag(Linedef l, CheckBox c, int mask)
+        {
+            if (c.CheckState == CheckState.Checked)
+                l.SwitchMask |= mask;
+            else if (c.CheckState == CheckState.Unchecked)
+                l.SwitchMask &= ~mask;
+        }
 
         // This sets up the form to edit the given lines
         public void Setup(ICollection<Linedef> lines)
@@ -207,27 +217,6 @@ namespace CodeImp.DoomBuilder.Windows
             ////////////////////////////////////////////////////////////////////////
             // Set all options to the first linedef properties
             ////////////////////////////////////////////////////////////////////////
-
-            // 20120219 villsa - Disable checkboxes if multiple lines are selected...
-            // I am lazy, go away...
-            if (lines.Count > 1)
-            {
-                chkSwitchTextureLower.Enabled = false;
-                chkSwitchTextureMiddle.Enabled = false;
-                chkSwitchTextureUpper.Enabled = false;
-                chkSwitchDisplayLower.Enabled = false;
-                chkSwitchDisplayMiddle.Enabled = false;
-                chkSwitchDisplayUpper.Enabled = false;
-            }
-            else
-            {
-                chkSwitchTextureLower.Enabled = true;
-                chkSwitchTextureMiddle.Enabled = true;
-                chkSwitchTextureUpper.Enabled = true;
-                chkSwitchDisplayLower.Enabled = true;
-                chkSwitchDisplayMiddle.Enabled = true;
-                chkSwitchDisplayUpper.Enabled = true;
-            }
 
             // Get first line
             fl = General.GetByIndex(lines, 0);
@@ -309,8 +298,12 @@ namespace CodeImp.DoomBuilder.Windows
                         PreSetActivationFlag(activationtypeuse, l.Activate, 16384);
                         PreSetActivationFlag(activationtyperepeat, l.Activate, 32768);
                     }
-
-                    SwitchTextureMask(l);
+					
+					if (l.SwitchMask > 0)
+                    {
+                        // Check switch masks
+                        PreSetSwitchFlags(l.SwitchMask);
+                    }
                 }
 
                 // Action/tags
@@ -364,7 +357,7 @@ namespace CodeImp.DoomBuilder.Windows
 
             foreach (Linedef l in lines)
             {
-                // 20120219 villsa
+                // 20120219 villsa - linedef specials
                 l.Activate -= (l.Activate & 511);
                 CheckActivationState(activationtypered, l.Activate, 512);
                 CheckActivationState(activationtypeblue, l.Activate, 1024);
@@ -373,6 +366,14 @@ namespace CodeImp.DoomBuilder.Windows
                 CheckActivationState(activationtypeshoot, l.Activate, 8192);
                 CheckActivationState(activationtypeuse, l.Activate, 16384);
                 CheckActivationState(activationtyperepeat, l.Activate, 32768);
+				
+				// Linedef switch flags
+				CheckActivationState(chkSwitchTextureLower, l.SwitchMask, 0x4000);
+				CheckActivationState(chkSwitchTextureMiddle, l.SwitchMask, 0x6000);
+				CheckActivationState(chkSwitchTextureUpper, l.SwitchMask, 0x2000);
+				CheckActivationState(chkSwitchDisplayLower, l.SwitchMask, 0x10000);
+				CheckActivationState(chkSwitchDisplayMiddle, l.SwitchMask, 0x18000);
+				CheckActivationState(chkSwitchDisplayUpper, l.SwitchMask, 0x8000);
             }
 
             // Refresh controls so that they show their image
@@ -444,13 +445,15 @@ namespace CodeImp.DoomBuilder.Windows
             // Go for all the lines
             foreach (Linedef l in lines)
             {
-                // Apply all flags
+                // Apply all non-switch flags
                 foreach (CheckBox c in flags.Checkboxes)
                 {
                     if (c.CheckState == CheckState.Checked) l.SetFlag(c.Tag.ToString(), true);
                     else if (c.CheckState == CheckState.Unchecked) l.SetFlag(c.Tag.ToString(), false);
                 }
+				
 
+				// Activation types
                 l.Activate -= (l.Activate & 511);
                 SetActivationFlag(l, activationtypered, 512);
                 SetActivationFlag(l, activationtypeblue, 1024);
@@ -459,8 +462,10 @@ namespace CodeImp.DoomBuilder.Windows
                 SetActivationFlag(l, activationtypeshoot, 8192);
                 SetActivationFlag(l, activationtypeuse, 16384);
                 SetActivationFlag(l, activationtyperepeat, 32768);
+				
+				// Switch flags
+				SetSwitchMask(l);
 
-                SetSwitchMask(l);
 
                 // Action/tag
                 l.Tag = General.Clamp(tag.GetResult(l.Tag), General.Map.FormatInterface.MinTag, General.Map.FormatInterface.MaxTag);
@@ -586,6 +591,10 @@ namespace CodeImp.DoomBuilder.Windows
         {
             if (this.chkSwitchDisplayUpper.Checked)
             {
+				if (lines.Count > 1)
+					{
+						return;
+					}
                 this.chkSwitchDisplayLower.Checked = false;
                 this.chkSwitchDisplayMiddle.Checked = false;
             }
@@ -595,6 +604,10 @@ namespace CodeImp.DoomBuilder.Windows
         {
             if (this.chkSwitchDisplayMiddle.Checked)
             {
+				if (lines.Count > 1)
+					{
+						return;
+					}
                 this.chkSwitchDisplayLower.Checked = false;
                 this.chkSwitchDisplayUpper.Checked = false;
             }
@@ -604,6 +617,10 @@ namespace CodeImp.DoomBuilder.Windows
         {
             if (this.chkSwitchDisplayLower.Checked)
             {
+				if (lines.Count > 1)
+					{
+						return;
+					}
                 this.chkSwitchDisplayUpper.Checked = false;
                 this.chkSwitchDisplayMiddle.Checked = false;
             }
@@ -613,6 +630,10 @@ namespace CodeImp.DoomBuilder.Windows
         {
             if (this.chkSwitchTextureUpper.Checked)
             {
+				if (lines.Count > 1)
+					{
+						return;
+					}
                 this.chkSwitchTextureLower.Checked = false;
                 this.chkSwitchTextureMiddle.Checked = false;
             }
@@ -622,6 +643,10 @@ namespace CodeImp.DoomBuilder.Windows
         {
             if (this.chkSwitchTextureMiddle.Checked)
             {
+				if (lines.Count > 1)
+					{
+						return;
+					}
                 this.chkSwitchTextureLower.Checked = false;
                 this.chkSwitchTextureUpper.Checked = false;
             }
@@ -631,6 +656,10 @@ namespace CodeImp.DoomBuilder.Windows
         {
             if (this.chkSwitchTextureLower.Checked)
             {
+				if (lines.Count > 1)
+					{
+						return;
+					}
                 this.chkSwitchTextureUpper.Checked = false;
                 this.chkSwitchTextureMiddle.Checked = false;
             }
