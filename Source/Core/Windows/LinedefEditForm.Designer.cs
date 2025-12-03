@@ -46,24 +46,23 @@ namespace CodeImp.DoomBuilder.Windows
             this.apply = new System.Windows.Forms.Button();
             this.actiongroup = new System.Windows.Forms.GroupBox();
             this.action = new CodeImp.DoomBuilder.Controls.ActionSelectorControl();
-            this.browseaction = new System.Windows.Forms.Button();
             this.newtag = new System.Windows.Forms.Button();
             this.settingsgroup = new System.Windows.Forms.GroupBox();
             this.flags = new CodeImp.DoomBuilder.Controls.CheckboxArrayControl();
             this.linedefproperties = new System.Windows.Forms.Panel();
             this.backgroup = new System.Windows.Forms.GroupBox();
-            this.backside = new System.Windows.Forms.CheckBox();
             this.backoffsety = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
             this.backoffsetx = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
             this.backsector = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
+            this.backside = new System.Windows.Forms.CheckBox();
             this.backlow = new CodeImp.DoomBuilder.Controls.TextureSelectorControl();
             this.backmid = new CodeImp.DoomBuilder.Controls.TextureSelectorControl();
             this.backhigh = new CodeImp.DoomBuilder.Controls.TextureSelectorControl();
             this.frontgroup = new System.Windows.Forms.GroupBox();
-            this.frontside = new System.Windows.Forms.CheckBox();
             this.frontoffsety = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
             this.frontoffsetx = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
             this.frontsector = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
+            this.frontside = new System.Windows.Forms.CheckBox();
             this.frontlow = new CodeImp.DoomBuilder.Controls.TextureSelectorControl();
             this.frontmid = new CodeImp.DoomBuilder.Controls.TextureSelectorControl();
             this.fronthigh = new CodeImp.DoomBuilder.Controls.TextureSelectorControl();
@@ -85,6 +84,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.idgroup = new System.Windows.Forms.GroupBox();
             this.tag = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
             this.heightpanel3 = new System.Windows.Forms.Panel();
+            this.browseaction = new System.Windows.Forms.Button();
             labelAction = new System.Windows.Forms.Label();
             taglabel = new System.Windows.Forms.Label();
             switchtexturelbl = new System.Windows.Forms.Label();
@@ -303,20 +303,6 @@ namespace CodeImp.DoomBuilder.Windows
             this.action.Value = 402;
             this.action.ValueChanges += new System.EventHandler(this.action_ValueChanges);
             // 
-            // browseaction
-            // 
-            this.browseaction.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.browseaction.Image = global::CodeImp.DoomBuilder.Properties.Resources.treeview;
-            this.browseaction.Location = new System.Drawing.Point(569, 32);
-            this.browseaction.Margin = new System.Windows.Forms.Padding(4);
-            this.browseaction.Name = "browseaction";
-            this.browseaction.Padding = new System.Windows.Forms.Padding(0, 0, 1, 4);
-            this.browseaction.Size = new System.Drawing.Size(38, 29);
-            this.browseaction.TabIndex = 1;
-            this.browseaction.Text = " ";
-            this.browseaction.UseVisualStyleBackColor = true;
-            this.browseaction.Click += new System.EventHandler(this.browseaction_Click);
-            // 
             // newtag
             // 
             this.newtag.Location = new System.Drawing.Point(186, 34);
@@ -399,19 +385,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.backgroup.TabIndex = 34;
             this.backgroup.TabStop = false;
             this.backgroup.Text = "     ";
-            // 
-            // backside
-            // 
-            this.backside.AutoSize = true;
-            this.backside.Location = new System.Drawing.Point(14, -1);
-            this.backside.Margin = new System.Windows.Forms.Padding(4);
-            this.backside.Name = "backside";
-            this.backside.Size = new System.Drawing.Size(92, 20);
-            this.backside.TabIndex = 20;
-            this.backside.Text = "Back Side";
-            this.backside.UseVisualStyleBackColor = true;
-            this.backside.CheckStateChanged += new System.EventHandler(this.backside_CheckStateChanged);
-            // 
+            //
             // backoffsety
             // 
             this.backoffsety.AllowDecimal = false;
@@ -450,6 +424,18 @@ namespace CodeImp.DoomBuilder.Windows
             this.backsector.Size = new System.Drawing.Size(162, 27);
             this.backsector.StepValues = null;
             this.backsector.TabIndex = 17;
+            // 
+            // backside
+            // 
+            this.backside.AutoSize = true;
+            this.backside.Location = new System.Drawing.Point(14, -1);
+            this.backside.Margin = new System.Windows.Forms.Padding(4);
+            this.backside.Name = "backside";
+            this.backside.Size = new System.Drawing.Size(92, 20);
+            this.backside.TabIndex = 20;
+            this.backside.Text = "Back Side";
+            this.backside.UseVisualStyleBackColor = true;
+            this.backside.CheckStateChanged += new System.EventHandler(this.backside_CheckStateChanged);
             // 
             // backlow
             // 
@@ -506,19 +492,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.frontgroup.TabIndex = 33;
             this.frontgroup.TabStop = false;
             this.frontgroup.Text = "     ";
-            // 
-            // frontside
-            // 
-            this.frontside.AutoSize = true;
-            this.frontside.Location = new System.Drawing.Point(8, 0);
-            this.frontside.Margin = new System.Windows.Forms.Padding(4);
-            this.frontside.Name = "frontside";
-            this.frontside.Size = new System.Drawing.Size(95, 20);
-            this.frontside.TabIndex = 17;
-            this.frontside.Text = "Front Side";
-            this.frontside.UseVisualStyleBackColor = true;
-            this.frontside.CheckStateChanged += new System.EventHandler(this.frontside_CheckStateChanged);
-            // 
+            //
             // frontoffsety
             // 
             this.frontoffsety.AllowDecimal = false;
@@ -556,7 +530,19 @@ namespace CodeImp.DoomBuilder.Windows
             this.frontsector.Name = "frontsector";
             this.frontsector.Size = new System.Drawing.Size(162, 27);
             this.frontsector.StepValues = null;
-            this.frontsector.TabIndex = 14;
+            this.frontsector.TabIndex = 14; 
+            // 
+            // frontside
+            // 
+            this.frontside.AutoSize = true;
+            this.frontside.Location = new System.Drawing.Point(8, 0);
+            this.frontside.Margin = new System.Windows.Forms.Padding(4);
+            this.frontside.Name = "frontside";
+            this.frontside.Size = new System.Drawing.Size(95, 20);
+            this.frontside.TabIndex = 17;
+            this.frontside.Text = "Front Side";
+            this.frontside.UseVisualStyleBackColor = true;
+            this.frontside.CheckStateChanged += new System.EventHandler(this.frontside_CheckStateChanged);
             // 
             // frontlow
             // 
@@ -813,6 +799,20 @@ namespace CodeImp.DoomBuilder.Windows
             this.heightpanel3.Size = new System.Drawing.Size(98, 665);
             this.heightpanel3.TabIndex = 5;
             this.heightpanel3.Visible = false;
+            //
+            // browseaction
+            // 
+            this.browseaction.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.browseaction.Image = global::CodeImp.DoomBuilder.Properties.Resources.List;
+            this.browseaction.Location = new System.Drawing.Point(569, 32);
+            this.browseaction.Margin = new System.Windows.Forms.Padding(4);
+            this.browseaction.Name = "browseaction";
+            this.browseaction.Padding = new System.Windows.Forms.Padding(0, 0, 1, 4);
+            this.browseaction.Size = new System.Drawing.Size(38, 29);
+            this.browseaction.TabIndex = 1;
+            this.browseaction.Text = " ";
+            this.browseaction.UseVisualStyleBackColor = true;
+            this.browseaction.Click += new System.EventHandler(this.browseaction_Click);
             // 
             // LinedefEditForm
             // 

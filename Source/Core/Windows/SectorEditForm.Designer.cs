@@ -534,7 +534,7 @@ namespace CodeImp.DoomBuilder.Windows
             // browseeffect
             // 
             this.browseeffect.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.browseeffect.Image = global::CodeImp.DoomBuilder.Properties.Resources.treeview;
+            this.browseeffect.Image = global::CodeImp.DoomBuilder.Properties.Resources.List;
             this.browseeffect.Location = new System.Drawing.Point(481, 26);
             this.browseeffect.Margin = new System.Windows.Forms.Padding(4);
             this.browseeffect.Name = "browseeffect";

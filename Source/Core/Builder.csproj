@@ -738,6 +738,8 @@
     <Compile Include="Rendering\SurfaceEntry.cs" />
 	<Compile Include="Rendering\SurfaceEntryCollection.cs" />
     <Compile Include="Rendering\SurfaceManager.cs" />
+	<Compile Include="Types\ThingClassHandler.cs" />
+    <Compile Include="Types\ThingTypeHandler.cs" />
 	<Compile Include="Rendering\SurfaceUpdate.cs" />
     <Compile Include="Windows\DelayedForm.cs">
       <SubType>Form</SubType>
@@ -806,12 +808,16 @@
     <Compile Include="General\StepsList.cs" />
     <None Include="Resources\Builder16.png" />
     <None Include="Resources\CLogo.png" />
+	<None Include="Resources\Angle.png" />
     <Content Include="Resources\DB64.ico" />
     <EmbeddedResource Include="Resources\ThingTrigger.png" />
     <EmbeddedResource Include="Resources\ThingCamera.png" />
     <None Include="Resources\ViewColorFloor.png" />
     <None Include="Resources\ViewColorCeiling.png" />
     <None Include="Resources\ViewColorThing.png" />
+	<None Include="Resources\Text.png" />
+    <None Include="Resources\List_Images.png" />
+    <None Include="Resources\List.png" />
     <None Include="Resources\PasteSpecial.png" />
     <None Include="Resources\ScriptHelp.png" />
     <None Include="Resources\ErrorLarge.png" />
