@@ -151,6 +151,7 @@ namespace CodeImp.DoomBuilder.Windows
             colorindication.Color = General.Colors.Indication;
             colorgrid.Color = General.Colors.Grid;
             colorgrid64.Color = General.Colors.Grid64;
+            colorInfo.Color = General.Colors.InfoLine; //mxd
             colorscriptbackground.Color = General.Colors.ScriptBackground;
             colorlinenumbers.Color = General.Colors.LineNumbers;
             colorplaintext.Color = General.Colors.PlainText;
@@ -258,6 +259,7 @@ namespace CodeImp.DoomBuilder.Windows
             General.Colors.Keywords = colorkeywords.Color;
             General.Colors.Literals = colorliterals.Color;
             General.Colors.Constants = colorconstants.Color;
+            General.Colors.InfoLine = colorInfo.Color; //mxd
             General.Colors.CreateAssistColors();
             General.Settings.BlackBrowsers = blackbrowsers.Checked;
             General.Settings.ClassicBilinear = classicbilinear.Checked;

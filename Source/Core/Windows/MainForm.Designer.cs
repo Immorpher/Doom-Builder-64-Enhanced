@@ -69,6 +69,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.itemsnaptogrid = new System.Windows.Forms.ToolStripMenuItem();
             this.itemautomerge = new System.Windows.Forms.ToolStripMenuItem();
             this.itemfullbrightness = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemtoggleeventlines = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.itemgridinc = new System.Windows.Forms.ToolStripMenuItem();
             this.itemgriddec = new System.Windows.Forms.ToolStripMenuItem();
@@ -139,6 +140,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.buttonsnaptogrid = new System.Windows.Forms.ToolStripButton();
             this.buttonautomerge = new System.Windows.Forms.ToolStripButton();
             this.buttonfullbrightness = new System.Windows.Forms.ToolStripButton();
+            this.buttontoggleeventlines = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.buttontest = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -440,6 +442,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.itemsnaptogrid,
             this.itemautomerge,
             this.itemfullbrightness,
+            this.itemtoggleeventlines,
             this.toolStripMenuItem6,
             this.itemgridinc,
             this.itemgriddec,
@@ -542,6 +545,16 @@ namespace CodeImp.DoomBuilder.Windows
             this.itemfullbrightness.Tag = "builder_togglefullbrightness";
             this.itemfullbrightness.Text = "Toggle Full Brightness";
             this.itemfullbrightness.Click += new System.EventHandler(this.InvokeTaggedAction);
+            // 
+            // itemeventlines
+            // 
+            this.itemtoggleeventlines.CheckOnClick = true;
+            this.itemtoggleeventlines.Image = global::CodeImp.DoomBuilder.Properties.Resources.InfoLine;
+            this.itemtoggleeventlines.Name = "itemtoggleeventlines";
+            this.itemtoggleeventlines.Size = new System.Drawing.Size(165, 22);
+            this.itemtoggleeventlines.Tag = "builder_gztoggleeventlines";
+            this.itemtoggleeventlines.Text = "Show Event Lines";
+            this.itemtoggleeventlines.Click += new System.EventHandler(this.InvokeTaggedAction);
             // 
             // toolStripMenuItem6
             // 
@@ -961,6 +974,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.buttonsnaptogrid,
             this.buttonautomerge,
             this.buttonfullbrightness,
+            this.buttontoggleeventlines,
             this.toolStripSeparator5,
             this.buttontest,
             this.toolStripSeparator6});
@@ -1247,6 +1261,17 @@ namespace CodeImp.DoomBuilder.Windows
             this.buttonfullbrightness.Tag = "builder_togglefullbrightness";
             this.buttonfullbrightness.Text = "Toggle Full Brightness";
             this.buttonfullbrightness.Click += new System.EventHandler(this.InvokeTaggedAction);
+            // 
+            // buttontoggleeventlines
+            // 
+            this.buttontoggleeventlines.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttontoggleeventlines.Image = global::CodeImp.DoomBuilder.Properties.Resources.InfoLine;
+            this.buttontoggleeventlines.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttontoggleeventlines.Name = "buttontoggleeventlines";
+            this.buttontoggleeventlines.Size = new System.Drawing.Size(23, 22);
+            this.buttontoggleeventlines.Tag = "builder_gztoggleeventlines";
+            this.buttontoggleeventlines.Text = "Show Event Lines";
+            this.buttontoggleeventlines.Click += new System.EventHandler(this.InvokeTaggedAction);
             // 
             // toolStripSeparator5
             // 
@@ -1799,6 +1824,8 @@ namespace CodeImp.DoomBuilder.Windows
         private System.Windows.Forms.ToolStripMenuItem itemautomerge;
 		private System.Windows.Forms.ToolStripButton buttonfullbrightness;
 		private System.Windows.Forms.ToolStripMenuItem itemfullbrightness;
+        private System.Windows.Forms.ToolStripButton buttontoggleeventlines;
+        private System.Windows.Forms.ToolStripMenuItem itemtoggleeventlines;
         private System.Windows.Forms.ToolStripSeparator buttoneditmodesseperator;
         private System.Windows.Forms.Timer processor;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;

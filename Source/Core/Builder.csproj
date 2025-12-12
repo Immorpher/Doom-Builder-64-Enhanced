@@ -815,6 +815,7 @@
     <None Include="Resources\ViewColorFloor.png" />
     <None Include="Resources\ViewColorCeiling.png" />
     <None Include="Resources\ViewColorThing.png" />
+	<None Include="Resources\InfoLine.png" />
 	<None Include="Resources\Text.png" />
     <None Include="Resources\List_Images.png" />
     <None Include="Resources\List.png" />
@@ -976,6 +977,8 @@
       <SubType>Designer</SubType>
       <DependentUpon>VertexEditForm.cs</DependentUpon>
     </EmbeddedResource>
+	<Compile Include="GZBuilder\Data\LinkHelper.cs" />
+	<Compile Include="GZBuilder\Geometry\Line3D.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

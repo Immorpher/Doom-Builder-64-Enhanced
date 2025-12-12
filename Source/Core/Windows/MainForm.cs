@@ -1978,6 +1978,7 @@ namespace CodeImp.DoomBuilder.Windows
             itemsnaptogrid.Enabled = (General.Map != null);
             itemautomerge.Enabled = (General.Map != null);
             itemfullbrightness.Enabled = (General.Map != null);
+            itemtoggleeventlines.Checked = General.Settings.GZShowEventLines;
             itemgridsetup.Enabled = (General.Map != null);
             itemgridinc.Enabled = (General.Map != null);
             itemgriddec.Enabled = (General.Map != null);
@@ -2004,6 +2005,8 @@ namespace CodeImp.DoomBuilder.Windows
             buttonautomerge.Enabled = (General.Map != null);
             buttonfullbrightness.Enabled = (General.Map != null);
             buttonfullbrightness.Checked = Renderer.FullBrightness;
+            buttontoggleeventlines.Enabled = true;
+            buttontoggleeventlines.Checked = General.Settings.GZShowEventLines;
             buttoncut.Enabled = itemcut.Enabled;
             buttoncopy.Enabled = itemcopy.Enabled;
             buttonpaste.Enabled = itempaste.Enabled;
@@ -2044,6 +2047,19 @@ namespace CodeImp.DoomBuilder.Windows
             }
             General.Map.Map.Update();
             General.Interface.RedrawDisplay();
+        }
+
+        [BeginAction("gztoggleeventlines")]
+        internal void ToggleEventLines()
+        {
+            General.Settings.GZShowEventLines = !General.Settings.GZShowEventLines;
+
+            itemtoggleeventlines.Checked = General.Settings.GZShowEventLines;
+            buttontoggleeventlines.Checked = General.Settings.GZShowEventLines;
+
+            General.MainWindow.DisplayStatus(StatusType.Action, "Event lines are " + (General.Settings.GZShowEventLines ? "ENABLED" : "DISABLED"));
+            General.MainWindow.RedrawDisplay();
+            //General.MainWindow.UpdateGZDoomPanel();
         }
 
         #endregion

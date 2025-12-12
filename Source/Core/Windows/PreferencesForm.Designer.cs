@@ -144,6 +144,7 @@ namespace CodeImp.DoomBuilder.Windows
             this.tabpasting = new System.Windows.Forms.TabPage();
             this.label16 = new System.Windows.Forms.Label();
             this.pasteoptions = new CodeImp.DoomBuilder.Controls.PasteOptionsControl();
+            this.colorInfo = new CodeImp.DoomBuilder.Controls.ColorControl();
             this.tabswitchsetupoptions = new System.Windows.Forms.TabPage(); // styd
             this.switchsetupgroupBox1 = new System.Windows.Forms.GroupBox(); // styd
             this.switchsetupselectmultiplelinedefs = new System.Windows.Forms.CheckBox(); // styd
@@ -395,6 +396,7 @@ namespace CodeImp.DoomBuilder.Windows
             // 
             this.colorsgroup1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.colorsgroup1.Controls.Add(this.colorInfo);
             this.colorsgroup1.Controls.Add(this.colorTagonly);
             this.colorsgroup1.Controls.Add(this.colorSecret);
             this.colorsgroup1.Controls.Add(this.colorMblock);
@@ -418,6 +420,18 @@ namespace CodeImp.DoomBuilder.Windows
             this.colorsgroup1.TabStop = false;
             this.colorsgroup1.Text = " Display ";
             this.colorsgroup1.Visible = false;
+            // 
+            // colorInfo
+            // 
+            this.colorInfo.BackColor = System.Drawing.Color.Transparent;
+            this.colorInfo.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colorInfo.Label = "Event lines:";
+            this.colorInfo.Location = new System.Drawing.Point(19, 506);
+            this.colorInfo.MaximumSize = new System.Drawing.Size(12500, 29);
+            this.colorInfo.MinimumSize = new System.Drawing.Size(125, 29);
+            this.colorInfo.Name = "colorInfo";
+            this.colorInfo.Size = new System.Drawing.Size(210, 29);
+            this.colorInfo.TabIndex = 18;
             // 
             // colorTagonly
             // 
@@ -1864,6 +1878,7 @@ namespace CodeImp.DoomBuilder.Windows
         private CodeImp.DoomBuilder.Controls.ColorControl colorMblock;
         private CodeImp.DoomBuilder.Controls.ColorControl coloinvisiblelinedef;
         private System.Windows.Forms.CheckBox cbShowFPS;
+        private CodeImp.DoomBuilder.Controls.ColorControl colorInfo;
         private System.Windows.Forms.TabPage tabswitchsetupoptions; // styd
         private System.Windows.Forms.GroupBox switchsetupgroupBox1; // styd
         private System.Windows.Forms.CheckBox switchsetupselectmultiplelinedefs; // styd

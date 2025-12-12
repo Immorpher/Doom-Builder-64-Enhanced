@@ -233,6 +233,16 @@ namespace CodeImp.DoomBuilder.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap InfoLine {
+            get {
+                object obj = ResourceManager.GetObject("InfoLine", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap KnownTextureSet {
             get {
                 object obj = ResourceManager.GetObject("KnownTextureSet", resourceCulture);

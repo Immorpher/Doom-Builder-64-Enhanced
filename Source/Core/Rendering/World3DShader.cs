@@ -50,12 +50,18 @@ namespace CodeImp.DoomBuilder.Rendering
         private EffectHandle modulatecolor;
         private EffectHandle highlightcolor;
 
+        //mxd
+        private EffectHandle vertexColorHadle;
+
         #endregion
 
         #region ================== Properties
 
         public Matrix WorldViewProj { set { if (manager.Enabled) effect.SetValue<Matrix>(worldviewproj, value); } }
         public Texture Texture1 { set { if (manager.Enabled) effect.SetTexture(texture1, value); } }
+
+        //mxd
+        public Color4 VertexColor { set { if (manager.Enabled) effect.SetValue<Color4>(vertexColorHadle, value); } }
 
         #endregion
 
@@ -78,6 +84,9 @@ namespace CodeImp.DoomBuilder.Rendering
                 modulatecolor = effect.GetParameter(null, "modulatecolor");
                 highlightcolor = effect.GetParameter(null, "highlightcolor");
                 maxanisotropysetting = effect.GetParameter(null, "maxanisotropysetting");
+
+                //mxd
+                vertexColorHadle = effect.GetParameter(null, "vertexColor");
             }
 
             // Initialize world vertex declaration
@@ -109,6 +118,9 @@ namespace CodeImp.DoomBuilder.Rendering
                 if (modulatecolor != null) modulatecolor.Dispose();
                 if (highlightcolor != null) highlightcolor.Dispose();
                 if (maxanisotropysetting != null) maxanisotropysetting.Dispose();
+
+                //mxd
+                if (vertexColorHadle != null) vertexColorHadle.Dispose();
 
                 // Done
                 base.Dispose();

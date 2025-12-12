@@ -33,6 +33,7 @@ using CodeImp.DoomBuilder.Editing;
 using CodeImp.DoomBuilder.Actions;
 using CodeImp.DoomBuilder.Config;
 using CodeImp.DoomBuilder.Types;
+using CodeImp.DoomBuilder.GZBuilder.Geometry;
 
 #endregion
 
@@ -161,6 +162,11 @@ namespace CodeImp.DoomBuilder.BuilderModes
                     BuilderPlug.Me.RenderReverseAssociations(renderer, highlightasso);
                     renderer.RenderThing(highlighted, General.Colors.Highlight, 1.0f);
                 }
+
+                //mxd
+                if (General.Settings.GZShowEventLines)
+                    renderer.RenderArrows(GZBuilder.Data.LinksCollector.GetThingLinks(General.Map.ThingsFilter.VisibleThings), General.Colors.InfoLine);
+
                 renderer.Finish();
             }
 
@@ -193,9 +199,9 @@ namespace CodeImp.DoomBuilder.BuilderModes
 
             // Set highlight association
             if (t != null)
-                highlightasso.Set(t.Tag, UniversalType.ThingTag);
+                highlightasso.Set(t.Position, t.Tag, UniversalType.ThingTag);
             else
-                highlightasso.Set(0, 0);
+                highlightasso.Set(new Vector2D(), 0, 0);
 
             // New association highlights something?
             if ((t != null) && (t.Tag > 0)) completeredraw = true;
@@ -217,9 +223,9 @@ namespace CodeImp.DoomBuilder.BuilderModes
 
                 // Make new association
                 if (action != null)
-                    association[i].Set(t.Args[i], action.Args[i].Type);
+                    association[i].Set(t.Position, t.Args[i], action.Args[i].Type);
                 else
-                    association[i].Set(0, 0);
+                    association[i].Set(new Vector2D(), 0, 0);
 
                 // New association highlights something?
                 if ((association[i].type == UniversalType.SectorTag) ||

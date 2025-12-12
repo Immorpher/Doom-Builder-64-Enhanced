@@ -16,23 +16,24 @@
 
 #region ================== Namespaces
 
+using CodeImp.DoomBuilder.Data;
+using CodeImp.DoomBuilder.Geometry;
+using CodeImp.DoomBuilder.GZBuilder.Geometry; //mxd
+using CodeImp.DoomBuilder.IO;   // villsa
+using CodeImp.DoomBuilder.Map;
+using CodeImp.DoomBuilder.VisualModes;
+using SlimDX;
+using SlimDX.Direct3D9;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
-using System.Drawing;
-using System.ComponentModel;
-using SlimDX;
-using CodeImp.DoomBuilder.Geometry;
-using SlimDX.Direct3D9;
-using CodeImp.DoomBuilder.Data;
-using CodeImp.DoomBuilder.VisualModes;
-using CodeImp.DoomBuilder.Map;
-using CodeImp.DoomBuilder.IO;   // villsa
+using System.Text;
+using System.Windows.Forms;
 
 #endregion
 
@@ -553,6 +554,15 @@ namespace CodeImp.DoomBuilder.Rendering
             if (renderthingcages) RenderThingCages();
             RenderThingArrows();    // villsa
 
+            //mxd. LINKS
+            if (General.Settings.GZShowEventLines)
+            {
+                //mxd. gather links
+                List < Line3D > lines = GZBuilder.Data.LinksCollector.GetThingLinks(thingsbydistance);
+                if (lines.Count > 0)
+                    renderLinks(lines);
+            }
+
             // ADDITIVE PASS
             world = Matrix.Identity;
             ApplyMatrices3D();
@@ -699,6 +709,59 @@ namespace CodeImp.DoomBuilder.Rendering
             graphics.Shaders.World3D.EndPass();
             graphics.Shaders.World3D.SetModulateColor(-1);
             graphics.Device.SetRenderState(RenderState.TextureFactor, -1);
+        }
+
+        //mxd
+        private void renderLinks(List<Line3D> lines)
+        {
+            //create vertices
+            WorldVertex[] verts = new WorldVertex[lines.Count * 6];
+            float scaler = 20f;
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                WorldVertex endPoint = new WorldVertex(lines[i].v2);
+                float nz = lines[i].GetDelta().GetNormal().z * scaler;
+                float angle = lines[i].GetAngle();
+                verts[i * 6] = new WorldVertex(lines[i].v1);
+                verts[i * 6 + 1] = endPoint;
+                verts[i * 6 + 2] = endPoint;
+                verts[i * 6 + 3] = new WorldVertex(new Vector3D(lines[i].v2.x - scaler * (float)Math.Sin(angle - 0.46f), lines[i].v2.y + scaler * (float)Math.Cos(angle - 0.46f), lines[i].v2.z - nz));
+                verts[i * 6 + 4] = endPoint;
+                verts[i * 6 + 5] = new WorldVertex(new Vector3D(lines[i].v2.x - scaler * (float)Math.Sin(angle + 0.46f), lines[i].v2.y + scaler * (float)Math.Cos(angle + 0.46f), lines[i].v2.z - nz));
+            }
+
+            VertexBuffer vb = new VertexBuffer(General.Map.Graphics.Device, WorldVertex.Stride * verts.Length, Usage.WriteOnly | Usage.Dynamic, VertexFormat.None, Pool.Default);
+            DataStream s = vb.Lock(0, WorldVertex.Stride * verts.Length, LockFlags.Discard);
+            s.WriteRange<WorldVertex>(verts);
+            vb.Unlock();
+            s.Dispose();
+
+            //begin rendering
+            graphics.Device.SetRenderState(RenderState.AlphaBlendEnable, true);
+            graphics.Device.SetRenderState(RenderState.AlphaTestEnable, false);
+            graphics.Device.SetRenderState(RenderState.ZWriteEnable, false);
+            graphics.Device.SetRenderState(RenderState.SourceBlend, Blend.SourceAlpha);
+            graphics.Device.SetRenderState(RenderState.DestinationBlend, Blend.SourceAlpha);
+
+            graphics.Shaders.World3D.BeginPass(16);
+
+            world = Matrix.Identity;
+            ApplyMatrices3D();
+
+            // Setup color
+            graphics.Shaders.World3D.VertexColor = General.Colors.InfoLine.ToColorValue();
+
+            //render
+            graphics.Shaders.World3D.ApplySettings();
+            graphics.Device.SetStreamSource(0, vb, 0, WorldVertex.Stride);
+            graphics.Device.DrawPrimitives(PrimitiveType.LineList, 0, lines.Count * 3);
+
+            // Done
+            graphics.Shaders.World3D.EndPass();
+            graphics.Shaders.World3D.SetModulateColor(-1);
+            graphics.Device.SetRenderState(RenderState.TextureFactor, -1);
+            vb.Dispose();
         }
 
         // This performs a single render pass
