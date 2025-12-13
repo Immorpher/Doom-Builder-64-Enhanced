@@ -494,7 +494,7 @@ namespace CodeImp.DoomBuilder.Windows
             // tag
             // 
             this.tag.AllowDecimal = false;
-            this.tag.AllowNegative = false;
+            this.tag.AllowNegative = true;
             this.tag.AllowRelative = true;
             this.tag.ButtonStep = 1;
             this.tag.Location = new System.Drawing.Point(111, 20);

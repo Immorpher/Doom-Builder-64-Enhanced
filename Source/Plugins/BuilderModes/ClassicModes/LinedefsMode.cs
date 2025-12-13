@@ -87,7 +87,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
             // are or were drawn we need to redraw the entire display.
 
             // Previous association highlights something?
-            if ((highlighted != null) && (highlighted.Tag > 0)) completeredraw = true;
+            if ((highlighted != null) && (highlighted.Tag != 0)) completeredraw = true;
 
             // Set highlight association
             if (l != null)
@@ -96,7 +96,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
                 highlightasso.Set(new Vector2D(), 0, 0);
 
             // New association highlights something?
-            if ((l != null) && (l.Tag > 0)) completeredraw = true;
+            if ((l != null) && (l.Tag != 0)) completeredraw = true;
 
             // Use the line tag to highlight sectors (Doom style)
             if (General.Map.Config.LineTagIndicatesSectors)

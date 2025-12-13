@@ -228,7 +228,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
             // are or were drawn we need to redraw the entire display.
 
             // Previous association highlights something?
-            if ((highlighted != null) && (highlighted.Tag > 0)) completeredraw = true;
+            if ((highlighted != null) && (highlighted.Tag != 0)) completeredraw = true;
 
             // Set highlight association
             if (s != null)
@@ -237,7 +237,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
                 highlightasso.Set(new Vector2D(), 0, 0);
 
             // New association highlights something?
-            if ((s != null) && (s.Tag > 0)) completeredraw = true;
+            if ((s != null) && (s.Tag != 0)) completeredraw = true;
 
             // Change label color
             if ((highlighted != null) && !highlighted.IsDisposed)
