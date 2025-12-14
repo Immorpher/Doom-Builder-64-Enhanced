@@ -383,8 +383,8 @@ namespace CodeImp.DoomBuilder.BuilderModes
         // This renders the associated sectors/linedefs with the indication color
         public void PlotAssociations(IRenderer2D renderer, Association asso)
         {
-            // Tag must be above zero
-            if (asso.tag <= 0) return;
+            // Tag must not be zero
+            if (asso.tag == 0) return;
 
             // Sectors?
             if (asso.type == UniversalType.SectorTag)
@@ -422,8 +422,8 @@ namespace CodeImp.DoomBuilder.BuilderModes
         // This renders the associated things with the indication color
         public void RenderAssociations(IRenderer2D renderer, Association asso)
         {
-            // Tag must be above zero
-            if (asso.tag <= 0) return;
+            // Tag must not be zero
+            if (asso.tag == 0) return;
 
             // Things?
             if (asso.type == UniversalType.ThingTag)
@@ -445,8 +445,8 @@ namespace CodeImp.DoomBuilder.BuilderModes
         // This renders the associated sectors/linedefs with the indication color
         public void PlotReverseAssociations(IRenderer2D renderer, Association asso)
         {
-            // Tag must be above zero
-            if (asso.tag <= 0) return;
+            // Tag must not be zero
+            if (asso.tag == 0) return;
 
             List<Line3D> lines = new List<Line3D>(); //mxd
 
@@ -502,8 +502,8 @@ namespace CodeImp.DoomBuilder.BuilderModes
         // This renders the associated things with the indication color
         public void RenderReverseAssociations(IRenderer2D renderer, Association asso)
         {
-            // Tag must be above zero
-            if (asso.tag <= 0) return;
+            // Tag must not be zero
+            if (asso.tag == 0) return;
 
             List<Line3D> lines = new List<Line3D>(); //mxd
 
