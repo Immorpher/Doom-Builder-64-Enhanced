@@ -37,7 +37,7 @@ using System.Drawing;
 
 namespace CodeImp.DoomBuilder.BuilderModes.Editing
 {
-	#if DEBUG
+#if DEBUG
 	
 	[EditMode(DisplayName = "Triangulator Mode",
 			  SwitchAction = "triangulatormode",		// Action name used to switch to this mode
@@ -46,11 +46,11 @@ namespace CodeImp.DoomBuilder.BuilderModes.Editing
 
 	public class TriangulatorMode : ClassicMode
 	{
-		#region ================== Constants
+        #region ================== Constants
 
-		#endregion
+        #endregion
 
-		#region ================== Variables
+        #region ================== Variables
 
 		// Highlighted item
 		private Sector highlighted;
@@ -58,13 +58,13 @@ namespace CodeImp.DoomBuilder.BuilderModes.Editing
 		// Labels
 		private ICollection<LabelPositionInfo> labelpos;
 
-		#endregion
+        #endregion
 
-		#region ================== Properties
+        #region ================== Properties
 
-		#endregion
+        #endregion
 
-		#region ================== Constructor / Disposer
+        #region ================== Constructor / Disposer
 
 		// Constructor
 		public TriangulatorMode()
@@ -84,9 +84,9 @@ namespace CodeImp.DoomBuilder.BuilderModes.Editing
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region ================== Methods
+        #region ================== Methods
 
 		// Cancel mode
 		public override void OnCancel()
@@ -178,9 +178,6 @@ namespace CodeImp.DoomBuilder.BuilderModes.Editing
 
 				// Set new highlight
 				highlighted = s;
-
-				// Get label positions
-				if(s != null) labelpos = Tools.FindLabelPositions(s);
 				
 				// Render highlighted item
 				if((highlighted != null) && !highlighted.IsDisposed)
@@ -434,7 +431,7 @@ namespace CodeImp.DoomBuilder.BuilderModes.Editing
 						renderer.Present();
 					}
 					
-					Thread.Sleep(10);
+					//Thread.Sleep(10);
 					
 					// Start with a clear display
 					if(renderer.StartPlotter(true))
@@ -452,7 +449,7 @@ namespace CodeImp.DoomBuilder.BuilderModes.Editing
 					}
 
 					// Wait a bit
-					Thread.Sleep(40);
+					//Thread.Sleep(40);
 					Application.DoEvents();
 				}
 				
@@ -506,7 +503,7 @@ namespace CodeImp.DoomBuilder.BuilderModes.Editing
 		{
 			EarClipVertex prev, first;
 			
-			for(int a = 0; a < 8; a++)
+			for(int a = 0; a < 2; a++)
 			{
 				// Start with a clear display
 				if(renderer.StartPlotter(true))
@@ -543,7 +540,7 @@ namespace CodeImp.DoomBuilder.BuilderModes.Editing
 					renderer.Finish();
 					renderer.Present();
 				}
-				Thread.Sleep(60);
+				Thread.Sleep(10);
 				Application.DoEvents();
 
 				// Start with a clear display
@@ -573,12 +570,12 @@ namespace CodeImp.DoomBuilder.BuilderModes.Editing
 					renderer.Finish();
 					renderer.Present();
 				}
-				Thread.Sleep(40);
+				//Thread.Sleep(10);
 			}
 		}
 		
-		#endregion
+        #endregion
 	}
 
-	#endif
+#endif
 }
