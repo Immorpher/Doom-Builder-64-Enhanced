@@ -16,16 +16,19 @@
 
 #region ================== Namespaces
 
+using CodeImp.DoomBuilder.Data;
 using CodeImp.DoomBuilder.IO;
 using SlimDX.Direct3D9;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 #endregion
 
@@ -304,6 +307,44 @@ namespace CodeImp.DoomBuilder.Data
                 filedata.Dispose();
             }
             
+            // Add images from TEXTURES lump file
+            AddImagesToList(images, imgset);
+
+            return new List<ImageData>(images.Values);
+        }
+
+        #endregion
+
+        #region ================== Sprites
+	
+        // This loads the textures
+        public override ICollection<ImageData> LoadSprites()
+        {
+            Dictionary<long, ImageData> images = new Dictionary<long, ImageData>();
+            ICollection<ImageData> collection;
+            List<ImageData> imgset = new List<ImageData>();
+
+            // Error when suspended
+            if(issuspended) throw new Exception("Data reader is suspended");
+
+            // Load from wad files
+            // Note the backward order, because the last wad's images have priority
+            for(int i = wads.Count - 1; i >= 0; i--)
+            {
+                collection = wads[i].LoadSprites();
+                AddImagesToList(images, collection);
+            }
+
+            // Load TEXTURES lump file
+            imgset.Clear();
+            string[] alltexturefiles = GetAllFilesWithTitle("", "TEXTURES", false);
+            foreach(string texturesfile in alltexturefiles)
+            {
+                MemoryStream filedata = LoadFile(texturesfile);
+                WADReader.LoadHighresSprites(filedata, texturesfile, ref imgset, null, null);
+                filedata.Dispose();
+            }
+
             // Add images from TEXTURES lump file
             AddImagesToList(images, imgset);
 
