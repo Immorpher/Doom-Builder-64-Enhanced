@@ -115,7 +115,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
                         sectorcolor = -1;
                     else
                         sectorcolor = Thing.Sector.ThingColor.GetColor();
-
+                    
                     // styd: Adds a feature when you place a nightmare flag on things it automatically changes color to green
                     if (Thing.IsFlagSet("4096"))//Nightmare Flag
                     {
@@ -274,6 +274,16 @@ namespace CodeImp.DoomBuilder.BuilderModes
         // This forces to rebuild the whole thing
         public void Rebuild()
         {
+            // Find thing information
+            info = General.Map.Data.GetThingInfo(Thing.Type);
+            
+            // Find sprite texture
+            if (info.Sprite.Length > 0)
+            {
+                sprite = General.Map.Data.GetSpriteImage(info.Sprite);
+                if (sprite != null) sprite.AddReference();
+            }
+
             // Setup visual thing
             Setup();
         }
