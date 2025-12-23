@@ -82,10 +82,14 @@ namespace CodeImp.DoomBuilder.Geometry
         }
 
         /// <summary></summary>
-        public Plane(Vector3D p1, Vector3D p2, Vector3D p3)
+        public Plane(Vector3D p1, Vector3D p2, Vector3D p3, bool up)
         {
-            this.normal = Vector3D.CrossProduct(p1 - p2, p3 - p2).GetNormal();
-            this.offset = -Vector3D.DotProduct(normal, p2);
+            this.normal = Vector3D.CrossProduct(p2 - p1, p3 - p1).GetNormal();
+
+            if ((up && (this.normal.z < 0.0f)) || (!up && (this.normal.z > 0.0f)))
+                this.normal = -this.normal;
+            
+            this.offset = -Vector3D.DotProduct(normal, p3);
         }
 
         #endregion
@@ -93,15 +97,16 @@ namespace CodeImp.DoomBuilder.Geometry
         #region ================== Methods
 
         /// <summary>
-        /// This tests for intersection using a position and direction
+        /// This tests for intersection with a line.
+		/// See http://local.wasp.uwa.edu.au/~pbourke/geometry/planeline/
         /// </summary>
-        public bool GetIntersection(Vector3D position, Vector3D direction, ref float u_ray)
+        public bool GetIntersection(Vector3D from, Vector3D to, ref float u_ray)
         {
-            float a = Vector3D.DotProduct(normal, direction);
-            if (a != 0.0f)
+            float w = Vector3D.DotProduct(normal, from - to);
+            if (w != 0.0f)
             {
-                float b = Vector3D.DotProduct(normal, position);
-                u_ray = (offset - b) / a;
+                float v = Vector3D.DotProduct(normal, from);
+                u_ray = (offset + v) / w;
                 return true;
             }
             else
@@ -114,10 +119,11 @@ namespace CodeImp.DoomBuilder.Geometry
         /// This returns the smallest distance to the plane and the side on which the point lies.
         /// > 0 means the point lies on the front of the plane
         /// < 0 means the point lies behind the plane
+        /// See http://mathworld.wolfram.com/Point-PlaneDistance.html
         /// </summary>
         public float Distance(Vector3D p)
         {
-            return Vector3D.DotProduct(p, normal) + offset;
+            return Vector3D.DotProduct(normal, p) + offset;
         }
 
         /// <summary>
@@ -125,8 +131,24 @@ namespace CodeImp.DoomBuilder.Geometry
         /// </summary>
         public Vector3D ClosestOnPlane(Vector3D p)
         {
-            float d = Vector3D.DotProduct(p, normal) + offset;
+            float d = this.Distance(p);
             return p - normal * d;
+        }
+
+        /// <summary>
+		/// This returns Z on the plane at X, Y
+		/// </summary>
+		public float GetZ(Vector2D pos)
+		{
+            return (-offset - Vector2D.DotProduct(normal, pos)) / normal.z;
+        }
+
+		/// <summary>
+		/// This returns Z on the plane at X, Y
+		/// </summary>
+		public float GetZ(float x, float y)
+		{
+            return (-offset - (normal.x * x + normal.y * y)) / normal.z;
         }
 
         /// <summary>
