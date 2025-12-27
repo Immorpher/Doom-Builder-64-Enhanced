@@ -1511,6 +1511,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
             // Accept changes
             General.Editing.AcceptMode();
             General.Map.Map.ClearAllSelected();
+            General.Interface.RedrawDisplay();
         }
 
         // Flip vertically
