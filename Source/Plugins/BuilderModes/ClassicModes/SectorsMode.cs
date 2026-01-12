@@ -231,10 +231,12 @@ namespace CodeImp.DoomBuilder.BuilderModes
             if ((highlighted != null) && (highlighted.Tag != 0)) completeredraw = true;
 
             // Set highlight association
-            if (s != null)
-                highlightasso.Set(new Vector2D(s.BBox.X + s.BBox.Width / 2, s.BBox.Y + s.BBox.Height / 2), s.Tag, UniversalType.SectorTag);
-            else
+            if (s != null) {
+				Vector2D center = (s.Labels.Count > 0 ? s.Labels[0].position : new Vector2D(s.BBox.X + s.BBox.Width / 2, s.BBox.Y + s.BBox.Height / 2));
+				highlightasso.Set(center, s.Tag, UniversalType.SectorTag);
+			} else {
                 highlightasso.Set(new Vector2D(), 0, 0);
+            }
 
             // New association highlights something?
             if ((s != null) && (s.Tag != 0)) completeredraw = true;
