@@ -985,7 +985,7 @@
       <SubType>Designer</SubType>
       <DependentUpon>VertexEditForm.cs</DependentUpon>
     </EmbeddedResource>
-	<Compile Include="GZBuilder\Data\LinkHelper.cs" />
+	<Compile Include="GZBuilder\Data\LinksCollector.cs" />
 	<Compile Include="GZBuilder\Geometry\Line3D.cs" />
   </ItemGroup>
   <ItemGroup>
