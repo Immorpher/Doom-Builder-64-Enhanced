@@ -16,24 +16,23 @@
 
 #region ================== Namespaces
 
-using CodeImp.DoomBuilder.Actions;
-using CodeImp.DoomBuilder.Config;
-using CodeImp.DoomBuilder.Geometry;
-using CodeImp.DoomBuilder.IO;
-using CodeImp.DoomBuilder.Map;
-using CodeImp.DoomBuilder.Rendering;
-using CodeImp.DoomBuilder.Windows;
-using ICSharpCode.SharpZipLib.BZip2;
-using SlimDX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using System.Reflection;
+using CodeImp.DoomBuilder.Windows;
+using CodeImp.DoomBuilder.IO;
+using CodeImp.DoomBuilder.Map;
+using CodeImp.DoomBuilder.Rendering;
+using System.Diagnostics;
+using CodeImp.DoomBuilder.Actions;
+using ICSharpCode.SharpZipLib.BZip2;
+using CodeImp.DoomBuilder.Config;
+using CodeImp.DoomBuilder.Geometry;
 
 #endregion
 
