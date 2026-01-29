@@ -170,6 +170,9 @@ namespace CodeImp.DoomBuilder.Windows
         /// </summary>
         void AddDocker(Docker d);
 
+        // gzdb cross compat
+        void AddDocker(Docker d, bool notify);
+
         /// <summary>
         /// This removes a docker from the side panel.
         /// </summary>

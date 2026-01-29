@@ -2762,6 +2762,12 @@ namespace CodeImp.DoomBuilder.Windows
             dockerspanel.Add(d);
         }
 
+        // ano - gzdb plug cross compat
+        public void AddDocker(Docker d, bool notify)
+        {
+            AddDocker(d);
+        }
+
         // This removes a docker
         public bool RemoveDocker(Docker d)
         {
